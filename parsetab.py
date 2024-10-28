@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'COMMA CREATE EQUALS FROM ID INSERT INT INTO LPAREN NUMBER RPAREN SELECT SEMICOLON STRING TABLE VALUES VARCHAR WHEREstatement : CREATE TABLE ID LPAREN column_definitions RPAREN SEMICOLONcolumn_definitions : column_definitions COMMA column_definition\n                          | column_definitioncolumn_definition : ID type_specifiertype_specifier : INT\n                      | VARCHAR LPAREN NUMBER RPARENstatement : INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN value_list RPAREN SEMICOLONid_list : id_list COMMA ID\n               | IDvalue_list : value_list COMMA value\n                  | valuevalue : STRING\n             | NUMBERstatement : SELECT id_list FROM ID WHERE ID EQUALS value SEMICOLON'
+_lr_signature = 'ADD ALTER AND AS AVG COMMA COUNT DELETE DROP EQ FROM GT LP LT MAX MIN NAME NUMBER OR RP SELECT SUM TABLE WHEREquery : delete\n             | select\n             | alter_table\n             | drop_tabledelete : DELETE FROM NAME WHERE condition\n              | DELETE FROM NAMEselect : SELECT NAME FROM NAME WHERE condition\n              | SELECT NAME FROM NAMEalter_table : ALTER TABLE NAME ADD NAME NAMEdrop_table : DROP TABLE NAMEcondition : NAME EQ NUMBER\n                 | NAME LT NUMBER\n                 | NAME GT NUMBER\n                 | condition AND condition\n                 | condition OR conditionagg : COUNT LP NAME RP\n           | SUM LP NAME RP\n           | AVG LP NAME RP\n           | MIN LP NAME RP\n           | MAX LP NAME RP'
     
-_lr_action_items = {'CREATE':([0,],[2,]),'INSERT':([0,],[3,]),'SELECT':([0,],[4,]),'$end':([1,30,42,45,],[0,-1,-14,-7,]),'TABLE':([2,],[5,]),'INTO':([3,],[6,]),'ID':([4,5,6,11,12,13,14,21,26,],[8,9,10,15,16,17,8,28,17,]),'FROM':([7,8,16,],[11,-9,-8,]),'COMMA':([7,8,16,18,19,20,22,23,31,37,38,39,40,41,46,],[12,-9,-8,26,-3,12,-4,-5,-2,-12,-13,-6,44,-11,-10,]),'RPAREN':([8,16,18,19,20,22,23,31,34,37,38,39,40,41,46,],[-9,-8,25,-3,27,-4,-5,-2,39,-12,-13,-6,43,-11,-10,]),'LPAREN':([9,10,24,32,],[13,14,29,35,]),'WHERE':([15,],[21,]),'INT':([17,],[23,]),'VARCHAR':([17,],[24,]),'SEMICOLON':([25,36,37,38,43,],[30,42,-12,-13,45,]),'VALUES':([27,],[32,]),'EQUALS':([28,],[33,]),'NUMBER':([29,33,35,44,],[34,38,38,38,]),'STRING':([33,35,44,],[37,37,37,]),}
+_lr_action_items = {'DELETE':([0,],[6,]),'SELECT':([0,],[7,]),'ALTER':([0,],[8,]),'DROP':([0,],[9,]),'$end':([1,2,3,4,5,14,17,19,22,30,31,32,33,34,35,36,],[0,-1,-2,-3,-4,-6,-10,-8,-5,-7,-9,-11,-12,-13,-14,-15,]),'FROM':([6,11,],[10,15,]),'NAME':([7,10,12,13,15,18,20,23,24,28,29,],[11,14,16,17,19,21,24,21,31,21,21,]),'TABLE':([8,9,],[12,13,]),'WHERE':([14,19,],[18,23,]),'ADD':([16,],[20,]),'EQ':([21,],[25,]),'LT':([21,],[26,]),'GT':([21,],[27,]),'AND':([22,30,32,33,34,35,36,],[28,28,-11,-12,-13,28,28,]),'OR':([22,30,32,33,34,35,36,],[29,29,-11,-12,-13,29,29,]),'NUMBER':([25,26,27,],[32,33,34,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'statement':([0,],[1,]),'id_list':([4,14,],[7,20,]),'column_definitions':([13,],[18,]),'column_definition':([13,26,],[19,31,]),'type_specifier':([17,],[22,]),'value':([33,35,44,],[36,41,46,]),'value_list':([35,],[40,]),}
+_lr_goto_items = {'query':([0,],[1,]),'delete':([0,],[2,]),'select':([0,],[3,]),'alter_table':([0,],[4,]),'drop_table':([0,],[5,]),'condition':([18,23,28,29,],[22,30,35,36,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,19 +26,25 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> statement","S'",1,None,None,None),
-  ('statement -> CREATE TABLE ID LPAREN column_definitions RPAREN SEMICOLON','statement',7,'p_statement_create','parser.py',44),
-  ('column_definitions -> column_definitions COMMA column_definition','column_definitions',3,'p_column_definitions','parser.py',48),
-  ('column_definitions -> column_definition','column_definitions',1,'p_column_definitions','parser.py',49),
-  ('column_definition -> ID type_specifier','column_definition',2,'p_column_definition','parser.py',56),
-  ('type_specifier -> INT','type_specifier',1,'p_type_specifier','parser.py',60),
-  ('type_specifier -> VARCHAR LPAREN NUMBER RPAREN','type_specifier',4,'p_type_specifier','parser.py',61),
-  ('statement -> INSERT INTO ID LPAREN id_list RPAREN VALUES LPAREN value_list RPAREN SEMICOLON','statement',11,'p_statement_insert','parser.py',68),
-  ('id_list -> id_list COMMA ID','id_list',3,'p_id_list','parser.py',72),
-  ('id_list -> ID','id_list',1,'p_id_list','parser.py',73),
-  ('value_list -> value_list COMMA value','value_list',3,'p_value_list','parser.py',80),
-  ('value_list -> value','value_list',1,'p_value_list','parser.py',81),
-  ('value -> STRING','value',1,'p_value','parser.py',88),
-  ('value -> NUMBER','value',1,'p_value','parser.py',89),
-  ('statement -> SELECT id_list FROM ID WHERE ID EQUALS value SEMICOLON','statement',9,'p_statement_select','parser.py',93),
+  ("S' -> query","S'",1,None,None,None),
+  ('query -> delete','query',1,'p_query','newParser.py',92),
+  ('query -> select','query',1,'p_query','newParser.py',93),
+  ('query -> alter_table','query',1,'p_query','newParser.py',94),
+  ('query -> drop_table','query',1,'p_query','newParser.py',95),
+  ('delete -> DELETE FROM NAME WHERE condition','delete',5,'p_delete','newParser.py',99),
+  ('delete -> DELETE FROM NAME','delete',3,'p_delete','newParser.py',100),
+  ('select -> SELECT NAME FROM NAME WHERE condition','select',6,'p_select','newParser.py',110),
+  ('select -> SELECT NAME FROM NAME','select',4,'p_select','newParser.py',111),
+  ('alter_table -> ALTER TABLE NAME ADD NAME NAME','alter_table',6,'p_alter_table','newParser.py',122),
+  ('drop_table -> DROP TABLE NAME','drop_table',3,'p_drop_table','newParser.py',132),
+  ('condition -> NAME EQ NUMBER','condition',3,'p_condition','newParser.py',139),
+  ('condition -> NAME LT NUMBER','condition',3,'p_condition','newParser.py',140),
+  ('condition -> NAME GT NUMBER','condition',3,'p_condition','newParser.py',141),
+  ('condition -> condition AND condition','condition',3,'p_condition','newParser.py',142),
+  ('condition -> condition OR condition','condition',3,'p_condition','newParser.py',143),
+  ('agg -> COUNT LP NAME RP','agg',4,'p_agg','newParser.py',158),
+  ('agg -> SUM LP NAME RP','agg',4,'p_agg','newParser.py',159),
+  ('agg -> AVG LP NAME RP','agg',4,'p_agg','newParser.py',160),
+  ('agg -> MIN LP NAME RP','agg',4,'p_agg','newParser.py',161),
+  ('agg -> MAX LP NAME RP','agg',4,'p_agg','newParser.py',162),
 ]

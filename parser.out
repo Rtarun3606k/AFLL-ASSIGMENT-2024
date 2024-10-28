@@ -1,1 +1,422 @@
 Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    AS
+    COMMA
+
+Grammar
+
+Rule 0     S' -> query
+Rule 1     query -> delete
+Rule 2     query -> select
+Rule 3     query -> alter_table
+Rule 4     query -> drop_table
+Rule 5     delete -> DELETE FROM NAME WHERE condition
+Rule 6     delete -> DELETE FROM NAME
+Rule 7     select -> SELECT NAME FROM NAME WHERE condition
+Rule 8     select -> SELECT NAME FROM NAME
+Rule 9     alter_table -> ALTER TABLE NAME ADD NAME NAME
+Rule 10    drop_table -> DROP TABLE NAME
+Rule 11    condition -> NAME EQ NUMBER
+Rule 12    condition -> NAME LT NUMBER
+Rule 13    condition -> NAME GT NUMBER
+Rule 14    condition -> condition AND condition
+Rule 15    condition -> condition OR condition
+Rule 16    agg -> COUNT LP NAME RP
+Rule 17    agg -> SUM LP NAME RP
+Rule 18    agg -> AVG LP NAME RP
+Rule 19    agg -> MIN LP NAME RP
+Rule 20    agg -> MAX LP NAME RP
+
+Terminals, with rules where they appear
+
+ADD                  : 9
+ALTER                : 9
+AND                  : 14
+AS                   : 
+AVG                  : 18
+COMMA                : 
+COUNT                : 16
+DELETE               : 5 6
+DROP                 : 10
+EQ                   : 11
+FROM                 : 5 6 7 8
+GT                   : 13
+LP                   : 16 17 18 19 20
+LT                   : 12
+MAX                  : 20
+MIN                  : 19
+NAME                 : 5 6 7 7 8 8 9 9 9 10 11 12 13 16 17 18 19 20
+NUMBER               : 11 12 13
+OR                   : 15
+RP                   : 16 17 18 19 20
+SELECT               : 7 8
+SUM                  : 17
+TABLE                : 9 10
+WHERE                : 5 7
+error                : 
+
+Nonterminals, with rules where they appear
+
+agg                  : 
+alter_table          : 3
+condition            : 5 7 14 14 15 15
+delete               : 1
+drop_table           : 4
+query                : 0
+select               : 2
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . query
+    (1) query -> . delete
+    (2) query -> . select
+    (3) query -> . alter_table
+    (4) query -> . drop_table
+    (5) delete -> . DELETE FROM NAME WHERE condition
+    (6) delete -> . DELETE FROM NAME
+    (7) select -> . SELECT NAME FROM NAME WHERE condition
+    (8) select -> . SELECT NAME FROM NAME
+    (9) alter_table -> . ALTER TABLE NAME ADD NAME NAME
+    (10) drop_table -> . DROP TABLE NAME
+
+    DELETE          shift and go to state 6
+    SELECT          shift and go to state 7
+    ALTER           shift and go to state 8
+    DROP            shift and go to state 9
+
+    query                          shift and go to state 1
+    delete                         shift and go to state 2
+    select                         shift and go to state 3
+    alter_table                    shift and go to state 4
+    drop_table                     shift and go to state 5
+
+state 1
+
+    (0) S' -> query .
+
+
+
+state 2
+
+    (1) query -> delete .
+
+    $end            reduce using rule 1 (query -> delete .)
+
+
+state 3
+
+    (2) query -> select .
+
+    $end            reduce using rule 2 (query -> select .)
+
+
+state 4
+
+    (3) query -> alter_table .
+
+    $end            reduce using rule 3 (query -> alter_table .)
+
+
+state 5
+
+    (4) query -> drop_table .
+
+    $end            reduce using rule 4 (query -> drop_table .)
+
+
+state 6
+
+    (5) delete -> DELETE . FROM NAME WHERE condition
+    (6) delete -> DELETE . FROM NAME
+
+    FROM            shift and go to state 10
+
+
+state 7
+
+    (7) select -> SELECT . NAME FROM NAME WHERE condition
+    (8) select -> SELECT . NAME FROM NAME
+
+    NAME            shift and go to state 11
+
+
+state 8
+
+    (9) alter_table -> ALTER . TABLE NAME ADD NAME NAME
+
+    TABLE           shift and go to state 12
+
+
+state 9
+
+    (10) drop_table -> DROP . TABLE NAME
+
+    TABLE           shift and go to state 13
+
+
+state 10
+
+    (5) delete -> DELETE FROM . NAME WHERE condition
+    (6) delete -> DELETE FROM . NAME
+
+    NAME            shift and go to state 14
+
+
+state 11
+
+    (7) select -> SELECT NAME . FROM NAME WHERE condition
+    (8) select -> SELECT NAME . FROM NAME
+
+    FROM            shift and go to state 15
+
+
+state 12
+
+    (9) alter_table -> ALTER TABLE . NAME ADD NAME NAME
+
+    NAME            shift and go to state 16
+
+
+state 13
+
+    (10) drop_table -> DROP TABLE . NAME
+
+    NAME            shift and go to state 17
+
+
+state 14
+
+    (5) delete -> DELETE FROM NAME . WHERE condition
+    (6) delete -> DELETE FROM NAME .
+
+    WHERE           shift and go to state 18
+    $end            reduce using rule 6 (delete -> DELETE FROM NAME .)
+
+
+state 15
+
+    (7) select -> SELECT NAME FROM . NAME WHERE condition
+    (8) select -> SELECT NAME FROM . NAME
+
+    NAME            shift and go to state 19
+
+
+state 16
+
+    (9) alter_table -> ALTER TABLE NAME . ADD NAME NAME
+
+    ADD             shift and go to state 20
+
+
+state 17
+
+    (10) drop_table -> DROP TABLE NAME .
+
+    $end            reduce using rule 10 (drop_table -> DROP TABLE NAME .)
+
+
+state 18
+
+    (5) delete -> DELETE FROM NAME WHERE . condition
+    (11) condition -> . NAME EQ NUMBER
+    (12) condition -> . NAME LT NUMBER
+    (13) condition -> . NAME GT NUMBER
+    (14) condition -> . condition AND condition
+    (15) condition -> . condition OR condition
+
+    NAME            shift and go to state 21
+
+    condition                      shift and go to state 22
+
+state 19
+
+    (7) select -> SELECT NAME FROM NAME . WHERE condition
+    (8) select -> SELECT NAME FROM NAME .
+
+    WHERE           shift and go to state 23
+    $end            reduce using rule 8 (select -> SELECT NAME FROM NAME .)
+
+
+state 20
+
+    (9) alter_table -> ALTER TABLE NAME ADD . NAME NAME
+
+    NAME            shift and go to state 24
+
+
+state 21
+
+    (11) condition -> NAME . EQ NUMBER
+    (12) condition -> NAME . LT NUMBER
+    (13) condition -> NAME . GT NUMBER
+
+    EQ              shift and go to state 25
+    LT              shift and go to state 26
+    GT              shift and go to state 27
+
+
+state 22
+
+    (5) delete -> DELETE FROM NAME WHERE condition .
+    (14) condition -> condition . AND condition
+    (15) condition -> condition . OR condition
+
+    $end            reduce using rule 5 (delete -> DELETE FROM NAME WHERE condition .)
+    AND             shift and go to state 28
+    OR              shift and go to state 29
+
+
+state 23
+
+    (7) select -> SELECT NAME FROM NAME WHERE . condition
+    (11) condition -> . NAME EQ NUMBER
+    (12) condition -> . NAME LT NUMBER
+    (13) condition -> . NAME GT NUMBER
+    (14) condition -> . condition AND condition
+    (15) condition -> . condition OR condition
+
+    NAME            shift and go to state 21
+
+    condition                      shift and go to state 30
+
+state 24
+
+    (9) alter_table -> ALTER TABLE NAME ADD NAME . NAME
+
+    NAME            shift and go to state 31
+
+
+state 25
+
+    (11) condition -> NAME EQ . NUMBER
+
+    NUMBER          shift and go to state 32
+
+
+state 26
+
+    (12) condition -> NAME LT . NUMBER
+
+    NUMBER          shift and go to state 33
+
+
+state 27
+
+    (13) condition -> NAME GT . NUMBER
+
+    NUMBER          shift and go to state 34
+
+
+state 28
+
+    (14) condition -> condition AND . condition
+    (11) condition -> . NAME EQ NUMBER
+    (12) condition -> . NAME LT NUMBER
+    (13) condition -> . NAME GT NUMBER
+    (14) condition -> . condition AND condition
+    (15) condition -> . condition OR condition
+
+    NAME            shift and go to state 21
+
+    condition                      shift and go to state 35
+
+state 29
+
+    (15) condition -> condition OR . condition
+    (11) condition -> . NAME EQ NUMBER
+    (12) condition -> . NAME LT NUMBER
+    (13) condition -> . NAME GT NUMBER
+    (14) condition -> . condition AND condition
+    (15) condition -> . condition OR condition
+
+    NAME            shift and go to state 21
+
+    condition                      shift and go to state 36
+
+state 30
+
+    (7) select -> SELECT NAME FROM NAME WHERE condition .
+    (14) condition -> condition . AND condition
+    (15) condition -> condition . OR condition
+
+    $end            reduce using rule 7 (select -> SELECT NAME FROM NAME WHERE condition .)
+    AND             shift and go to state 28
+    OR              shift and go to state 29
+
+
+state 31
+
+    (9) alter_table -> ALTER TABLE NAME ADD NAME NAME .
+
+    $end            reduce using rule 9 (alter_table -> ALTER TABLE NAME ADD NAME NAME .)
+
+
+state 32
+
+    (11) condition -> NAME EQ NUMBER .
+
+    AND             reduce using rule 11 (condition -> NAME EQ NUMBER .)
+    OR              reduce using rule 11 (condition -> NAME EQ NUMBER .)
+    $end            reduce using rule 11 (condition -> NAME EQ NUMBER .)
+
+
+state 33
+
+    (12) condition -> NAME LT NUMBER .
+
+    AND             reduce using rule 12 (condition -> NAME LT NUMBER .)
+    OR              reduce using rule 12 (condition -> NAME LT NUMBER .)
+    $end            reduce using rule 12 (condition -> NAME LT NUMBER .)
+
+
+state 34
+
+    (13) condition -> NAME GT NUMBER .
+
+    AND             reduce using rule 13 (condition -> NAME GT NUMBER .)
+    OR              reduce using rule 13 (condition -> NAME GT NUMBER .)
+    $end            reduce using rule 13 (condition -> NAME GT NUMBER .)
+
+
+state 35
+
+    (14) condition -> condition AND condition .
+    (14) condition -> condition . AND condition
+    (15) condition -> condition . OR condition
+
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    $end            reduce using rule 14 (condition -> condition AND condition .)
+    AND             shift and go to state 28
+    OR              shift and go to state 29
+
+  ! AND             [ reduce using rule 14 (condition -> condition AND condition .) ]
+  ! OR              [ reduce using rule 14 (condition -> condition AND condition .) ]
+
+
+state 36
+
+    (15) condition -> condition OR condition .
+    (14) condition -> condition . AND condition
+    (15) condition -> condition . OR condition
+
+  ! shift/reduce conflict for AND resolved as shift
+  ! shift/reduce conflict for OR resolved as shift
+    $end            reduce using rule 15 (condition -> condition OR condition .)
+    AND             shift and go to state 28
+    OR              shift and go to state 29
+
+  ! AND             [ reduce using rule 15 (condition -> condition OR condition .) ]
+  ! OR              [ reduce using rule 15 (condition -> condition OR condition .) ]
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for AND in state 35 resolved as shift
+WARNING: shift/reduce conflict for OR in state 35 resolved as shift
+WARNING: shift/reduce conflict for AND in state 36 resolved as shift
+WARNING: shift/reduce conflict for OR in state 36 resolved as shift
